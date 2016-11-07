@@ -1,0 +1,52 @@
+#!/bin/bash
+# www.brunoneves.com
+
+URL=$1
+
+pingSite(){
+    ping -q -c2 $1 > /dev/null
+    if [ $? -eq 0 ]
+    then
+        startCopy   
+    else
+        echo "Site not exist, offline or check your internet connection."
+    fi 
+}
+
+startCopy(){
+    echo "Creating copy: http://localhost:1024/$URL"
+
+    if [ -d "$URL" -a ! -h "$URL" ]
+    then
+        echo "Site already exist!!!"
+        echo "Do you like to make a new copy?"
+        echo "Enter [ Y-N ]"
+        read COPY
+        if [ $COPY -eq "Y"] || [ $COPY -eq "y"]
+        then
+           wgetSite $URL
+        fi
+    else
+        wgetSite $URL
+    fi
+
+    createServer
+}
+
+wgetSite(){
+    mkdir $1 | wget --user-agent="Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.3) Gecko/2008092416 Firefox/3.0.3" --mirror -p --convert-links http://$1 | echo "Site created."
+}
+
+createServer(){
+    python -m SimpleHTTPServer 1024 | open http://localhost:1024/$URL
+}
+
+init(){
+    pingSite $URL    
+}
+
+#init program
+init
+
+
+
