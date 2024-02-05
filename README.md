@@ -1,6 +1,6 @@
 # **copysite command-line program for UNIX **
 
-COPYSITE is a command-line program to make a local site copy from any online site and start a simpleHTTPServer running the local site copy.
+COPYSITE is a command-line program to create a local website copy from any online website.
 
 You can to access the local site copy using http://localhost:1024/www.yoursitecopy.com in your web browser.
 
